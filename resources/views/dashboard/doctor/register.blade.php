@@ -1,61 +1,68 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Doctor Register</title>
-    <link rel="stylesheet" href="{{ asset('css/bootstrap.min.css') }}">
-  </head>
-  <body>
+@extends('layouts.dashboard')
+@section('title', 'DOCTOR REGISTER')
+@section('content')
+
     <div class="container">
       <div class="row">
-        <div class="col-4">
-          <h4>Doctor Register</h4>
+
+          <h4>@yield('title')</h4>
+
           <form action="{{ route('doctor.create') }}" method="post" autocomplete="off">
+
             @if (Session::get('success'))
               <div class="alert alert-success">
                 {{ Session::get('success') }}
               </div>
             @endif
+
             @if (Session::get('fail'))
               <div class="alert alert-danger">
                 {{ Session::get('fail') }}
               </div>
             @endif
+
             @csrf
-            <div class="form-group">
-              <label for="name">Nome</label>
-              <input type="text" name="name" value="{{ old('name') }}" class="form-control">
+
+            <div class="form-floating">
+              <input type="text" name="name" value="{{ old('name') }}" class="form-control" placeholder="NOME COMPLETO">
+              <label for="name">NOME COMPLETO</label>
               <span class="text-danger">@error('name') {{ $message }} @enderror</span>
             </div>
-            <div class="form-group">
-              <label for="email">E-mail</label>
-              <input type="email" name="email" value="{{ old('email') }}" class="form-control">
-              <span class="text-danger">@error('email') {{ $message }} @enderror</span>
-            </div>
-            <div class="form-group">
-              <label for="hospital">Hospital</label>
-              <input type="text" name="hospital" value="{{ old('hospital') }}" class="form-control">
+
+            <div class="form-floating">
+              <input type="text" name="hospital" value="{{ old('hospital') }}" class="form-control" placeholder="HOSPITAL">
+              <label for="hospital">HOSPITAL</label>
               <span class="text-danger">@error('hospital') {{ $message }} @enderror</span>
             </div>
-            <div class="form-group">
-              <label for="password">Senha</label>
-              <input type="password" name="password" value="{{ old('password') }}" class="form-control">
+
+            <div class="form-floating">
+              <input type="email" name="email" value="{{ old('email') }}" class="form-control" placeholder="E-MAIL">
+              <label for="email">E-MAIL</label>
+              <span class="text-danger">@error('email') {{ $message }} @enderror</span>
+            </div>
+
+            <div class="form-floating">
+              <input type="password" name="password" value="{{ old('password') }}" class="form-control" placeholder="PASSWORD">
+              <label for="password">PASSWORD</label>
               <span class="text-danger">@error('password') {{ $message }} @enderror</span>
             </div>
-            <div class="form-group">
-              <label for="cpassword">Confirme a Senha</label>
-              <input type="password" name="cpassword" value="{{ old('cpassword') }}" class="form-control">
+
+            <div class="form-floating">
+              <input type="password" name="cpassword" value="{{ old('cpassword') }}" class="form-control" placeholder="REPITA O PASSWORD">
+              <label for="cpassword">CREPITA O PASSWORD</label>
               <span class="text-danger">@error('cpassword') {{ $message }} @enderror</span>
             </div>
+
             <div class="form-group">
-              <button type="submit" class="btn btn-primary">Register</button>
+              <button type="submit" class="btn btn-primary">Cadastrar-se</button>
             </div>
+
             <br>
+
             <a href="{{ route('doctor.login') }}">Já tenho uma conta</a>
+
           </form>
-        </div>
+
       </div>
     </div>
-  </body>
-</html>
+@endsection
