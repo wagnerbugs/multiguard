@@ -1,4 +1,4 @@
-@extends('layouts.dashboard')
+@extends('layouts.started')
 @section('title', 'DOCTOR REGISTER')
 @section('content')
 

@@ -1,4 +1,4 @@
-@extends('layouts.dashboard')
+@extends('layouts.started')
 @section('title', 'DOCTOR LOGIN')
 @section('content')
 
@@ -36,7 +36,7 @@
             <br>
 
             <a href="{{ route('doctor.register') }}">Criar nova conta</a>
-            
+
           </form>
 
       </div>

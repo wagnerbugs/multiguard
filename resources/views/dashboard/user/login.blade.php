@@ -1,4 +1,4 @@
-@extends('layouts.dashboard')
+@extends('layouts.started')
 @section('title', 'USER LOGIN')
 @section('content')
       <div class="container">
