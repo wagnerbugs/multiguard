@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
 
 class UserController extends Controller
@@ -72,17 +73,20 @@ class UserController extends Controller
       ]);
 
         $token = \Str::random(64);
-        \DB::table('password_resets')->insert([
-        'email'     =>$request->email,
-        'token'     =>$token,
-        'created_at' =>Carbon::now(),
-      ]);
+        DB::table('password_resets')->insert([
+          'email'     =>$request->email,
+          'token'     =>$token,
+          'created_at' =>Carbon::now(),
+        ]);
+
+        $name_user_db = DB::table('users')->where('email', $request->email)->first(['name']);
+        $name_user = $name_user_db->name;
 
         $action_link = route('user.reset.password.form', ['token'=>$token, 'email'=>$request->email]);
         $body= "Recebemos a solicitação de resetar a senha para acessar nosso site utilizando o e-mail ".$request->email." Você pode resetar sua senha clicando no link abaixo:";
         \Mail::send('email-forgot', ['action_link'=>$action_link,'body'=>$body], function ($message) use ($request) {
-            $message->from('wagnerbugs@gmail.com', 'MultiGuard');
-            $message->to($request->email, 'Seu nome')
+            $message->from(env('MAIL_FROM_ADDRESS'), env('APP_NAME'));
+            $message->to($request->email, $request->email)
                     ->subject('Reset Password');
         });
 
@@ -111,12 +115,12 @@ class UserController extends Controller
             return back()->withInput()->with('fail', 'Token Inválido');
         } else {
             User::where('email', $request->email)->update([
-            'password'=>\Hash::make($request->password)
-          ]);
+              'password'=>\Hash::make($request->password)
+            ]);
 
-            \DB::table('password_resets')->where([
-            'email'=>$request->email
-          ])->delete();
+            DB::table('password_resets')->where([
+              'email'=>$request->email
+            ])->delete();
 
             return redirect()->route('user.login')->with('info', 'Sua senha foi resetada com sucesso')->with('verifiedEmail', $request->email);
         }

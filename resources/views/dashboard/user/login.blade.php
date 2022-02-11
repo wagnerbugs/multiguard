@@ -4,7 +4,7 @@
       <div class="container">
         <div class="row">
 
-            <h4>@yield('title')</h4>
+            <h4>@yield('title') {{env('APP_ENV')}}</h4>
 
             <form action="{{ route('user.check') }}" method="post" autocomplete="off">
 
