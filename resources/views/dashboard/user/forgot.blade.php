@@ -1,12 +1,12 @@
 @extends('layouts.started')
-@section('title', 'USER LOGIN')
+@section('title', 'USER FORGOT PASSWORD')
 @section('content')
       <div class="container">
         <div class="row">
 
             <h4>@yield('title')</h4>
 
-            <form action="{{ route('user.check') }}" method="post" autocomplete="off">
+            <form action="{{ route('user.forgot.password.link')}}" method="post" autocomplete="off">
 
               @if (Session::get('fail'))
                 <div class="alert alert-danger">
@@ -14,9 +14,9 @@
                 </div>
               @endif
 
-              @if (Session::get('info'))
-                <div class="alert alert-info">
-                  {{ Session::get('info') }}
+              @if (Session::get('success'))
+                <div class="alert alert-success">
+                  {{ Session::get('success') }}
                 </div>
               @endif
 
@@ -28,21 +28,13 @@
                 <span class="text-danger">@error('email') {{ $message }} @enderror</span>
               </div>
 
-              <div class="form-floating mb-2">
-                <input type="password" name="password" id="password"  value="{{ old('password') }}" class="form-control" placeholder="PASSWORD">
-                <label for="password">PASSWORD</label>
-                <span class="text-danger">@error('password') {{ $message }} @enderror</span>
-              </div>
-
-              <a href="{{ route('user.forgot.password.form') }}">Esqueci a senha</a>
-
               <div class="form-group mt-2">
-                <button type="submit" class="btn btn-primary">Login</button>
+                <button type="submit" class="btn btn-primary">Resetar a senha</button>
               </div>
 
               <br>
 
-              <a href="{{ route('user.register') }}">Criar nova conta</a>
+              <a href="{{ route('user.login') }}">Login</a>
 
             </form>
 
